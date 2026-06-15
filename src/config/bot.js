@@ -1,10 +1,9 @@
 import { logger } from '../utils/logger.js';
 
-
 export const botConfig = {
-  // =========================
+  // ==============================
   // BOT PRESENCE (what users see under the bot name)
-  // =========================
+  // ==============================
   // `status` options:
   // - "online"    = green dot
   // - "idle"      = yellow moon
@@ -14,20 +13,8 @@ export const botConfig = {
     // Current online state shown on Discord.
     status: "online",
 
-    // Activity lines shown under the bot name.
-    // `type` number mapping from Discord:
-    // 0 = Playing
-    // 1 = Streaming
-    // 2 = Listening
-    // 3 = Watching
-    // 4 = Custom
-    // 5 = Competing
-  export const botConfig = {
-  presence: {
-    status: "online",
-  },
-  prefix: "?", // <--- Add it here if it's missing
-
+    // Activities (status messages) shown on Discord.
+    // You can add multiple activities, the bot will cycle through them.
     activities: [
       {
         // Text users will see (example: "Playing /help | Titan Bot").
@@ -37,6 +24,11 @@ export const botConfig = {
       },
     ],
   },
+
+  // =========================
+  // PREFIX CONFIGURATION
+  // =========================
+  prefix: "?",
 
   // =========================
   // COMMAND BEHAVIOR
@@ -199,7 +191,7 @@ export const botConfig = {
   // =========================
   // Add shop defaults here when needed.
   shop: {
-    
+
   },
 
   // =========================
@@ -352,10 +344,10 @@ export const botConfig = {
     maxAuditMetadataBytes: 4096,
     // Maximum number of audit entries kept in memory.
     maxInMemoryAuditEntries: 1000,
-  // If true, log every verification action.
-  logAllVerifications: true,
-  // If true, preserve verification audit history.
-  keepAuditTrail: true,
+    // If true, log every verification action.
+    logAllVerifications: true,
+    // If true, preserve verification audit history.
+    keepAuditTrail: true,
   },
 
   // =========================
@@ -473,7 +465,7 @@ export const botConfig = {
 export function validateConfig(config) {
   const errors = [];
 
-  
+
   if (process.env.NODE_ENV !== 'production') {
     logger.debug('Environment variables check:');
     logger.debug('DISCORD_TOKEN exists:', !!process.env.DISCORD_TOKEN);
@@ -492,7 +484,7 @@ export function validateConfig(config) {
     errors.push("Client ID is required (CLIENT_ID environment variable)");
   }
 
-  
+
   if (process.env.NODE_ENV === 'production') {
     if (!process.env.POSTGRES_HOST) {
       errors.push("PostgreSQL host is required in production (POSTGRES_HOST environment variable)");
@@ -521,10 +513,10 @@ if (configErrors.length > 0) {
 export const BotConfig = botConfig;
 
 export function getColor(path, fallback = "#99AAB5") {
-  
+
   if (typeof path === "number") return path;
   if (typeof path === "string" && path.startsWith("#")) {
-    
+
     return parseInt(path.replace("#", ""), 16);
   }
   const result = path
@@ -533,7 +525,7 @@ export function getColor(path, fallback = "#99AAB5") {
       (obj, key) => (obj && obj[key] !== undefined ? obj[key] : fallback),
       botConfig.embeds.colors,
     );
-  
+
   // Convert the result to integer if it's a hex string
   if (typeof result === "string" && result.startsWith("#")) {
     return parseInt(result.replace("#", ""), 16);
@@ -549,7 +541,4 @@ export function getRandomColor() {
 }
 
 export default botConfig;
-
-
-
-
+    
